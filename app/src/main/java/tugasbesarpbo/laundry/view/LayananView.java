@@ -5,7 +5,6 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -14,7 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
-public class LayananView extends JFrame {
+public class LayananView extends JPanel {
 
     private final JTextField idField = new JTextField();
     private final JTextField namaField = new JTextField();
@@ -30,7 +29,8 @@ public class LayananView extends JFrame {
             };
 
     private final JTable table = new JTable(tableModel);
-    private final JLabel statusLabel = new JLabel("Siap.", SwingConstants.CENTER);
+    private final JLabel statusLabel =
+            new JLabel("Siap.", SwingConstants.CENTER);
 
     private final JButton tambahButton = new JButton("Tambah");
     private final JButton ubahButton = new JButton("Ubah");
@@ -39,10 +39,7 @@ public class LayananView extends JFrame {
     private final JButton bersihkanButton = new JButton("Bersihkan");
 
     public LayananView() {
-        setTitle("Kelola Layanan Laundry");
-        setSize(750, 450);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
+        setLayout(new BorderLayout(8, 8));
 
         idField.setEditable(false);
 
@@ -73,9 +70,12 @@ public class LayananView extends JFrame {
             if (!e.getValueIsAdjusting() && table.getSelectedRow() >= 0) {
                 int row = table.getSelectedRow();
 
-                idField.setText(String.valueOf(tableModel.getValueAt(row, 0)));
-                namaField.setText(String.valueOf(tableModel.getValueAt(row, 1)));
-                hargaField.setText(String.valueOf(tableModel.getValueAt(row, 2)));
+                idField.setText(
+                        String.valueOf(tableModel.getValueAt(row, 0)));
+                namaField.setText(
+                        String.valueOf(tableModel.getValueAt(row, 1)));
+                hargaField.setText(
+                        String.valueOf(tableModel.getValueAt(row, 2)));
             }
         });
     }
@@ -129,9 +129,5 @@ public class LayananView extends JFrame {
         namaField.setText("");
         hargaField.setText("");
         table.clearSelection();
-    }
-
-    public void showWindow() {
-        setVisible(true);
     }
 }

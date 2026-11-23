@@ -4,6 +4,8 @@ package tugasbesarpbo.laundry.controller;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.swing.JPanel;
+
 import tugasbesarpbo.laundry.dao.PelangganDAO;
 import tugasbesarpbo.laundry.model.Customer;
 import tugasbesarpbo.laundry.view.PelangganView;
@@ -40,6 +42,7 @@ public class PelangganController {
             view.setStatus("Pelanggan berhasil ditambahkan.");
             view.clearForm();
             muatPelanggan();
+
         } catch (SQLException e) {
             view.setStatus("Gagal menambahkan pelanggan.");
             System.err.println("Kesalahan database: " + e.getMessage());
@@ -71,6 +74,7 @@ public class PelangganController {
             } else {
                 view.setStatus("Data pelanggan tidak ditemukan.");
             }
+
         } catch (SQLException | NumberFormatException e) {
             view.setStatus("Gagal mengubah data pelanggan.");
             System.err.println("Kesalahan: " + e.getMessage());
@@ -95,6 +99,7 @@ public class PelangganController {
             } else {
                 view.setStatus("Data pelanggan tidak ditemukan.");
             }
+
         } catch (SQLException | NumberFormatException e) {
             view.setStatus(
                     "Gagal menghapus. Periksa apakah pelanggan memiliki pesanan."
@@ -118,13 +123,14 @@ public class PelangganController {
 
             view.setPelangganData(data);
             view.setStatus("Jumlah pelanggan: " + daftar.size());
+
         } catch (SQLException e) {
             view.setStatus("Gagal memuat data pelanggan.");
             System.err.println("Kesalahan database: " + e.getMessage());
         }
     }
 
-    public void start() {
-        view.showWindow();
+    public JPanel getView() {
+        return view;
     }
 }

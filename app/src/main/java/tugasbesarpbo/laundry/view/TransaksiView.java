@@ -1,4 +1,3 @@
-
 package tugasbesarpbo.laundry.view;
 
 import java.awt.BorderLayout;
@@ -7,7 +6,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -16,7 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
-public class TransaksiView extends JFrame {
+public class TransaksiView extends JPanel {
 
     private final JComboBox<Object[]> pelangganCombo = new JComboBox<>();
     private final JComboBox<Object[]> layananCombo = new JComboBox<>();
@@ -46,10 +44,7 @@ public class TransaksiView extends JFrame {
     private final JButton muatButton = new JButton("Muat Ulang");
 
     public TransaksiView() {
-        setTitle("Transaksi Laundry");
-        setSize(850, 500);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
+        setLayout(new BorderLayout(8, 8));
 
         JPanel formPanel = new JPanel(new GridLayout(5, 2, 8, 8));
 
@@ -200,9 +195,5 @@ public class TransaksiView extends JFrame {
         beratField.setText("");
         setHarga(0);
         setTotal(0);
-    }
-
-    public void showWindow() {
-        setVisible(true);
     }
 }

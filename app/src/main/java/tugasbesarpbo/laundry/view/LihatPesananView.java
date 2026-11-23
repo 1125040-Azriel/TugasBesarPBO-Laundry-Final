@@ -1,26 +1,21 @@
-
 package tugasbesarpbo.laundry.view;
 
 import java.awt.BorderLayout;
 import java.util.List;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
-public class LihatPesananView extends JFrame {
+public class LihatPesananView extends JPanel {
 
     private final DefaultTableModel model;
     private final JLabel pesanLabel;
 
     public LihatPesananView() {
-        setTitle("Daftar Pesanan Laundry");
-        setSize(850, 450);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
         setLayout(new BorderLayout(10, 10));
 
         JLabel judul = new JLabel(
@@ -65,9 +60,5 @@ public class LihatPesananView extends JFrame {
 
     public void setPesan(String pesan) {
         pesanLabel.setText(pesan);
-    }
-
-    public void showWindow() {
-        setVisible(true);
     }
 }

@@ -6,7 +6,6 @@ import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -15,32 +14,34 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
-public class PelangganView extends JFrame {
+public class PelangganView extends JPanel {
 
-    private JTextField idField;
-    private JTextField namaField;
-    private JTextField teleponField;
-    private JTable tabelPelanggan;
-    private DefaultTableModel tableModel;
-    private JLabel statusLabel;
+    private final JTextField idField = new JTextField();
+    private final JTextField namaField = new JTextField();
+    private final JTextField teleponField = new JTextField();
 
-    private JButton tambahButton;
-    private JButton ubahButton;
-    private JButton hapusButton;
-    private JButton muatButton;
-    private JButton bersihkanButton;
+    private final DefaultTableModel tableModel =
+            new DefaultTableModel(
+                    new String[]{"ID", "Nama", "Nomor Telepon"}, 0) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+
+    private final JTable tabelPelanggan = new JTable(tableModel);
+    private final JLabel statusLabel = new JLabel("Siap.");
+
+    private final JButton tambahButton = new JButton("Tambah");
+    private final JButton ubahButton = new JButton("Ubah");
+    private final JButton hapusButton = new JButton("Hapus");
+    private final JButton muatButton = new JButton("Muat Ulang");
+    private final JButton bersihkanButton = new JButton("Bersihkan");
 
     public PelangganView() {
-        setTitle("Kelola Pelanggan - Laundry");
-        setSize(750, 450);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
+        setLayout(new BorderLayout(8, 8));
 
-        idField = new JTextField();
         idField.setEditable(false);
-
-        namaField = new JTextField();
-        teleponField = new JTextField();
 
         JPanel formPanel = new JPanel(new GridLayout(3, 2, 8, 8));
         formPanel.setBorder(
@@ -53,15 +54,6 @@ public class PelangganView extends JFrame {
         formPanel.add(new JLabel("Nomor Telepon:"));
         formPanel.add(teleponField);
 
-        tableModel = new DefaultTableModel(
-                new String[]{"ID", "Nama", "Nomor Telepon"}, 0) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-
-        tabelPelanggan = new JTable(tableModel);
         tabelPelanggan.setSelectionMode(
                 ListSelectionModel.SINGLE_SELECTION);
 
@@ -87,19 +79,11 @@ public class PelangganView extends JFrame {
 
         JPanel buttonPanel = new JPanel();
 
-        tambahButton = new JButton("Tambah");
-        ubahButton = new JButton("Ubah");
-        hapusButton = new JButton("Hapus");
-        muatButton = new JButton("Muat Ulang");
-        bersihkanButton = new JButton("Bersihkan");
-
         buttonPanel.add(tambahButton);
         buttonPanel.add(ubahButton);
         buttonPanel.add(hapusButton);
         buttonPanel.add(muatButton);
         buttonPanel.add(bersihkanButton);
-
-        statusLabel = new JLabel("Siap.");
 
         JPanel bottomPanel = new JPanel(new BorderLayout());
         bottomPanel.add(buttonPanel, BorderLayout.CENTER);
@@ -111,7 +95,7 @@ public class PelangganView extends JFrame {
     }
 
     public String getId() {
-        return idField.getText();
+        return idField.getText().trim();
     }
 
     public String getNama() {
@@ -120,10 +104,6 @@ public class PelangganView extends JFrame {
 
     public String getTelepon() {
         return teleponField.getText().trim();
-    }
-
-    public int getSelectedRow() {
-        return tabelPelanggan.getSelectedRow();
     }
 
     public void setStatus(String message) {
@@ -163,9 +143,5 @@ public class PelangganView extends JFrame {
         for (Object[] row : data) {
             tableModel.addRow(row);
         }
-    }
-
-    public void showWindow() {
-        setVisible(true);
     }
 }

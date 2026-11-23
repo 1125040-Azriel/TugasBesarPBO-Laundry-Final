@@ -1,4 +1,3 @@
-
 package tugasbesarpbo.laundry.controller;
 
 import java.sql.SQLException;
@@ -49,7 +48,7 @@ public class StatusLaundryController {
         }
     }
 
-    public void start() {
-        view.showWindow();
+    public StatusLaundryView getView() {
+        return view;
     }
 }

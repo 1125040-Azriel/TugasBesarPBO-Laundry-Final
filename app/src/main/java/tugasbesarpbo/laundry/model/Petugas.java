@@ -1,4 +1,3 @@
-
 package tugasbesarpbo.laundry.model;
 
 public class Petugas extends Staff {

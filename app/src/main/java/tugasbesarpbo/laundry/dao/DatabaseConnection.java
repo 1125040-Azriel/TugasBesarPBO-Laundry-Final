@@ -1,29 +1,38 @@
-
 package tugasbesarpbo.laundry.dao;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class DatabaseConnection {
 
-    private static final String URL =
+    private static final String DEFAULT_URL =
             "jdbc:postgresql://localhost:5432/laundry_db";
 
-    private static final String USER =
-            System.getenv("LAUNDRY_DB_USER");
-
-    private static final String PASSWORD =
-            System.getenv("LAUNDRY_DB_PASSWORD");
-
     public static Connection getConnection() throws SQLException {
-        if (USER == null || PASSWORD == null) {
+        Properties props = new Properties();
+        String url = DEFAULT_URL;
+        String user = System.getenv("LAUNDRY_DB_USER");
+        String password = System.getenv("LAUNDRY_DB_PASSWORD");
+
+        try (FileInputStream fis = new FileInputStream("config.properties")) {
+            props.load(fis);
+            url = props.getProperty("db.url", DEFAULT_URL);
+            user = props.getProperty("db.user", user);
+            password = props.getProperty("db.password", password);
+        } catch (IOException ignored) {
+        }
+
+        if (user == null || password == null) {
             throw new SQLException(
-                    "Konfigurasi LAUNDRY_DB_USER dan "
-                    + "LAUNDRY_DB_PASSWORD belum diatur."
+                    "Konfigurasi database belum diatur di config.properties "
+                    + "maupun environment variable."
             );
         }
 
-        return DriverManager.getConnection(URL, USER, PASSWORD);
+        return DriverManager.getConnection(url, user, password);
     }
 }

@@ -1,4 +1,3 @@
-
 package tugasbesarpbo.laundry.controller;
 
 import java.sql.SQLException;
@@ -54,7 +53,7 @@ public class PembayaranController {
         }
     }
 
-    public void start() {
-        view.showWindow();
+    public PembayaranView getView() {
+        return view;
     }
 }

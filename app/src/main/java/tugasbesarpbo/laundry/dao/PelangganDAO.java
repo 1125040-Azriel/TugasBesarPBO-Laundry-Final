@@ -12,7 +12,7 @@ import tugasbesarpbo.laundry.model.Customer;
 
 public class PelangganDAO {
 
-    // Menampilkan semua pelanggan
+    
     public List<Customer> getAll() throws SQLException {
         List<Customer> daftarPelanggan = new ArrayList<>();
 

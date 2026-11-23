@@ -1,4 +1,3 @@
-
 package tugasbesarpbo.laundry.controller;
 
 import java.sql.SQLException;
@@ -14,11 +13,7 @@ public class LihatPesananController {
     public LihatPesananController() {
         view = new LihatPesananView();
         dao = new TransaksiDAO();
-    }
-
-    public void start() {
         muatPesanan();
-        view.showWindow();
     }
 
     private void muatPesanan() {
@@ -29,5 +24,9 @@ public class LihatPesananController {
                     "Gagal memuat pesanan: " + e.getMessage()
             );
         }
+    }
+
+    public LihatPesananView getView() {
+        return view;
     }
 }

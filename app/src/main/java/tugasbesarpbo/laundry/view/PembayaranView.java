@@ -1,4 +1,3 @@
-
 package tugasbesarpbo.laundry.view;
 
 import java.awt.BorderLayout;
@@ -9,14 +8,13 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-public class PembayaranView extends JFrame {
+public class PembayaranView extends JPanel {
 
     private final JTable tabel;
     private final DefaultTableModel model;
@@ -28,10 +26,6 @@ public class PembayaranView extends JFrame {
     private double totalTerpilih = 0;
 
     public PembayaranView() {
-        setTitle("Proses Pembayaran Laundry");
-        setSize(850, 500);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
         setLayout(new BorderLayout(10, 10));
 
         model = new DefaultTableModel(
@@ -129,9 +123,5 @@ public class PembayaranView extends JFrame {
 
     public void setStatus(String pesan) {
         statusLabel.setText(pesan);
-    }
-
-    public void showWindow() {
-        setVisible(true);
     }
 }

@@ -1,4 +1,3 @@
-
 package tugasbesarpbo.laundry.dao;
 
 import java.sql.Connection;
@@ -8,8 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LayananDAO {
+public class LayananDAO implements Repository<Object[]> {
 
+    @Override
     public List<Object[]> getAll() throws SQLException {
         List<Object[]> daftarLayanan = new ArrayList<>();
 

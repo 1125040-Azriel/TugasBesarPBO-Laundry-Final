@@ -11,7 +11,6 @@ import java.util.List;
 
 public class LaporanDAO {
 
-    // Mengambil jumlah seluruh pesanan
     public int getJumlahPesanan() throws SQLException {
         String sql = """
             SELECT COUNT(*) AS total
@@ -30,7 +29,7 @@ public class LaporanDAO {
         return 0;
     }
 
-    // Mengambil total pendapatan dari pembayaran yang tercatat
+    
     public BigDecimal getTotalPendapatan() throws SQLException {
         String sql = """
             SELECT COALESCE(SUM(jumlah_bayar), 0) AS total
@@ -49,7 +48,7 @@ public class LaporanDAO {
         return BigDecimal.ZERO;
     }
 
-    // Mengambil jumlah pesanan berdasarkan status
+    
     public List<Object[]> getJumlahPesananPerStatus() throws SQLException {
         List<Object[]> data = new ArrayList<>();
 

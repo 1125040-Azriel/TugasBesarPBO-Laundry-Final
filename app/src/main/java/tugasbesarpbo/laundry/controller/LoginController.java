@@ -1,14 +1,11 @@
-
 package tugasbesarpbo.laundry.controller;
 
 import java.sql.SQLException;
 
 import tugasbesarpbo.laundry.dao.UserDAO;
-import tugasbesarpbo.laundry.model.Admin;
-import tugasbesarpbo.laundry.model.Kasir;
-import tugasbesarpbo.laundry.model.Petugas;
 import tugasbesarpbo.laundry.model.Role;
 import tugasbesarpbo.laundry.model.User;
+import tugasbesarpbo.laundry.model.UserFactory;
 import tugasbesarpbo.laundry.view.DashboardView;
 import tugasbesarpbo.laundry.view.LoginView;
 
@@ -43,24 +40,11 @@ public class LoginController {
                 return;
             }
 
-            User user;
+            User user = UserFactory.createUser(role, username, password);
 
-            switch (role) {
-                case ADMIN:
-                    user = new Admin(username, password);
-                    break;
-
-                case KASIR:
-                    user = new Kasir(username, password);
-                    break;
-
-                case PETUGAS:
-                    user = new Petugas(username, password);
-                    break;
-
-                default:
-                    view.setStatus("Role pengguna tidak valid.");
-                    return;
+            if (user == null) {
+                view.setStatus("Role pengguna tidak valid.");
+                return;
             }
 
             DashboardView dashboard = new DashboardView(user);

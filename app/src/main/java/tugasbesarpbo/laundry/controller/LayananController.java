@@ -4,6 +4,8 @@ package tugasbesarpbo.laundry.controller;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.swing.JPanel;
+
 import tugasbesarpbo.laundry.dao.LayananDAO;
 import tugasbesarpbo.laundry.view.LayananView;
 
@@ -142,7 +144,7 @@ public class LayananController {
         }
     }
 
-    public void start() {
-        view.showWindow();
+    public JPanel getView() {
+        return view;
     }
 }

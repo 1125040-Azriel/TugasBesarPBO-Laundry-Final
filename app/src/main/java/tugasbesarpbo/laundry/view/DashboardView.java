@@ -2,6 +2,7 @@
 package tugasbesarpbo.laundry.view;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Font;
 
 import javax.swing.JButton;
@@ -10,9 +11,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import tugasbesarpbo.laundry.controller.LaporanController;
 import tugasbesarpbo.laundry.controller.LayananController;
 import tugasbesarpbo.laundry.controller.LihatPesananController;
-import tugasbesarpbo.laundry.controller.LaporanController;
 import tugasbesarpbo.laundry.controller.LoginController;
 import tugasbesarpbo.laundry.controller.PelangganController;
 import tugasbesarpbo.laundry.controller.PembayaranController;
@@ -22,9 +23,17 @@ import tugasbesarpbo.laundry.model.User;
 
 public class DashboardView extends JFrame {
 
+    private final CardLayout cardLayout = new CardLayout();
+    private final JPanel contentPanel = new JPanel(cardLayout);
+    private final JPanel menuPanel = new JPanel();
+
+    private JPanel currentPage;
+
+    private final JButton backButton = new JButton("Kembali ke Menu");
+
     public DashboardView(User user) {
         setTitle("Sistem Manajemen Laundry - Dashboard");
-        setSize(600, 400);
+        setSize(900, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -34,7 +43,25 @@ public class DashboardView extends JFrame {
         );
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 22));
 
-        JPanel menuPanel = new JPanel();
+        JPanel headerPanel = new JPanel(new BorderLayout());
+        headerPanel.add(welcomeLabel, BorderLayout.CENTER);
+        headerPanel.add(backButton, BorderLayout.EAST);
+
+        backButton.setVisible(false);
+        backButton.addActionListener(e -> showMenu());
+
+        buatMenu(user);
+
+        contentPanel.add(menuPanel, "MENU");
+
+        setLayout(new BorderLayout(10, 10));
+        add(headerPanel, BorderLayout.NORTH);
+        add(contentPanel, BorderLayout.CENTER);
+
+        cardLayout.show(contentPanel, "MENU");
+    }
+
+    private void buatMenu(User user) {
 
         switch (user.getRole()) {
 
@@ -42,21 +69,21 @@ public class DashboardView extends JFrame {
                 JButton layananAdmin = new JButton("Kelola Layanan");
                 layananAdmin.addActionListener(e -> {
                     LayananController controller = new LayananController();
-                    controller.start();
+                    showPage(controller.getView());
                 });
                 menuPanel.add(layananAdmin);
 
                 JButton pelangganAdmin = new JButton("Kelola Pelanggan");
                 pelangganAdmin.addActionListener(e -> {
                     PelangganController controller = new PelangganController();
-                    controller.start();
+                    showPage(controller.getView());
                 });
                 menuPanel.add(pelangganAdmin);
 
                 JButton laporanAdmin = new JButton("Lihat Laporan");
                 laporanAdmin.addActionListener(e -> {
                     LaporanController controller = new LaporanController();
-                    controller.start();
+                    showPage(controller.getView());
                 });
                 menuPanel.add(laporanAdmin);
                 break;
@@ -65,14 +92,14 @@ public class DashboardView extends JFrame {
                 JButton transaksiButton = new JButton("Buat Transaksi");
                 transaksiButton.addActionListener(e -> {
                     TransaksiController controller = new TransaksiController();
-                    controller.start();
+                    showPage(controller.getView());
                 });
                 menuPanel.add(transaksiButton);
 
                 JButton pembayaranButton = new JButton("Proses Pembayaran");
                 pembayaranButton.addActionListener(e -> {
                     PembayaranController controller = new PembayaranController();
-                    controller.start();
+                    showPage(controller.getView());
                 });
                 menuPanel.add(pembayaranButton);
 
@@ -80,14 +107,14 @@ public class DashboardView extends JFrame {
                 lihatPesananKasir.addActionListener(e -> {
                     LihatPesananController controller =
                             new LihatPesananController();
-                    controller.start();
+                    showPage(controller.getView());
                 });
                 menuPanel.add(lihatPesananKasir);
 
                 JButton pelangganKasir = new JButton("Kelola Pelanggan");
                 pelangganKasir.addActionListener(e -> {
                     PelangganController controller = new PelangganController();
-                    controller.start();
+                    showPage(controller.getView());
                 });
                 menuPanel.add(pelangganKasir);
                 break;
@@ -97,7 +124,7 @@ public class DashboardView extends JFrame {
                 lihatPesananPetugas.addActionListener(e -> {
                     LihatPesananController controller =
                             new LihatPesananController();
-                    controller.start();
+                    showPage(controller.getView());
                 });
                 menuPanel.add(lihatPesananPetugas);
 
@@ -106,7 +133,7 @@ public class DashboardView extends JFrame {
                 statusLaundryButton.addActionListener(e -> {
                     StatusLaundryController controller =
                             new StatusLaundryController();
-                    controller.start();
+                    showPage(controller.getView());
                 });
                 menuPanel.add(statusLaundryButton);
                 break;
@@ -119,12 +146,34 @@ public class DashboardView extends JFrame {
             controller.start();
         });
 
-        JPanel bottomPanel = new JPanel();
-        bottomPanel.add(logoutButton);
+        menuPanel.add(logoutButton);
+    }
 
-        setLayout(new BorderLayout(10, 10));
-        add(welcomeLabel, BorderLayout.NORTH);
-        add(menuPanel, BorderLayout.CENTER);
-        add(bottomPanel, BorderLayout.SOUTH);
+    private void showPage(JPanel page) {
+        if (currentPage != null) {
+            contentPanel.remove(currentPage);
+        }
+
+        currentPage = page;
+        contentPanel.add(currentPage, "CONTENT");
+
+        backButton.setVisible(true);
+        cardLayout.show(contentPanel, "CONTENT");
+
+        contentPanel.revalidate();
+        contentPanel.repaint();
+    }
+
+    private void showMenu() {
+        if (currentPage != null) {
+            contentPanel.remove(currentPage);
+            currentPage = null;
+        }
+
+        backButton.setVisible(false);
+        cardLayout.show(contentPanel, "MENU");
+
+        contentPanel.revalidate();
+        contentPanel.repaint();
     }
 }

@@ -1,4 +1,3 @@
-
 package tugasbesarpbo.laundry.controller;
 
 import java.awt.event.ActionEvent;
@@ -7,6 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import tugasbesarpbo.laundry.dao.TransaksiDAO;
+import tugasbesarpbo.laundry.model.LaundryException;
 import tugasbesarpbo.laundry.view.TransaksiView;
 
 public class TransaksiController {
@@ -41,8 +41,8 @@ public class TransaksiController {
             view.setTotal(total);
             view.setStatus("Total harga berhasil dihitung.");
 
-        } catch (NumberFormatException ex) {
-            view.setStatus("Berat harus berupa angka yang valid.");
+        } catch (LaundryException ex) {
+            view.setStatus(ex.getMessage());
         } catch (IllegalStateException ex) {
             view.setStatus(ex.getMessage());
         }
@@ -73,8 +73,8 @@ public class TransaksiController {
             view.clearForm();
             muatPesanan();
 
-        } catch (NumberFormatException ex) {
-            view.setStatus("Berat harus berupa angka yang valid.");
+        } catch (LaundryException ex) {
+            view.setStatus(ex.getMessage());
         } catch (IllegalStateException ex) {
             view.setStatus(ex.getMessage());
         } catch (SQLException ex) {
@@ -83,22 +83,24 @@ public class TransaksiController {
         }
     }
 
-    private double bacaBerat() {
+    private double bacaBerat() throws LaundryException {
         String teks = view.getBerat();
 
         if (teks.isEmpty()) {
-            throw new NumberFormatException("Berat belum diisi.");
+            throw new LaundryException("Berat belum diisi.");
         }
 
-        double berat = Double.parseDouble(teks);
+        try {
+            double berat = Double.parseDouble(teks);
 
-        if (!Double.isFinite(berat) || berat <= 0) {
-            throw new NumberFormatException(
-                    "Berat harus lebih dari nol."
-            );
+            if (!Double.isFinite(berat) || berat <= 0) {
+                throw new LaundryException("Berat harus lebih dari nol.");
+            }
+
+            return berat;
+        } catch (NumberFormatException ex) {
+            throw new LaundryException("Berat harus berupa angka yang valid.");
         }
-
-        return berat;
     }
 
     private void perbaruiHargaLayanan() {
@@ -136,7 +138,7 @@ public class TransaksiController {
         }
     }
 
-    public void start() {
-        view.showWindow();
+    public TransaksiView getView() {
+        return view;
     }
 }

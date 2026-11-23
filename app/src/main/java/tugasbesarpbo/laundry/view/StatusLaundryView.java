@@ -1,4 +1,3 @@
-
 package tugasbesarpbo.laundry.view;
 
 import java.awt.BorderLayout;
@@ -7,7 +6,6 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -15,7 +13,7 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
-public class StatusLaundryView extends JFrame {
+public class StatusLaundryView extends JPanel {
 
     private final DefaultTableModel model;
     private final JTable tabel;
@@ -25,10 +23,6 @@ public class StatusLaundryView extends JFrame {
     private final JButton muatButton;
 
     public StatusLaundryView() {
-        setTitle("Update Status Laundry");
-        setSize(850, 450);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
         setLayout(new BorderLayout(10, 10));
 
         JLabel judul = new JLabel(
@@ -107,9 +101,5 @@ public class StatusLaundryView extends JFrame {
 
     public void setPesan(String pesan) {
         pesanLabel.setText(pesan);
-    }
-
-    public void showWindow() {
-        setVisible(true);
     }
 }
